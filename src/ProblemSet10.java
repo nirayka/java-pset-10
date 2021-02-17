@@ -1,33 +1,36 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ProblemSet10 {
 
     public static void main(String[] args) {
-        int[] arr = new int[]{7, 7, 7};
-        System.out.println(new ProblemSet10().maxMirror(arr));
+
     }
 
     public String[] fizzBuzz(int start, int end) {
         if (start > end) {
             return null;
-        }
-        String[] arr = new String[end - start];
-        int index = 0;
+        } else {
+            String[] newArray = new String[end - start];
+            int index = 0;
 
-        for (int i = start; i < end; i++) {
-            String appendString = "";
-            if (i % 3 == 0) {
-                appendString += "Fizz";
+            for (int i = start; i < end; i++) {
+                String stringToBeAdded = "";
+                if (i % 3 == 0) {
+                    stringToBeAdded += "Fizz";
+                }
+                if (i % 5 == 0) {
+                    stringToBeAdded += "Buzz";
+                }
+                if (stringToBeAdded.length() == 0) {
+                    stringToBeAdded = Integer.toString(i);
+                }
+                newArray[index] = stringToBeAdded;
+                index++;
             }
-            if (i % 5 == 0) {
-                appendString += "Buzz";
-            }
-            if (appendString.length() == 0) {
-                appendString = Integer.toString(i);
-            }
-            arr[index] = appendString;
-            index++;
+
+            return newArray;
         }
-        return arr;
     }
 
     public int maxSpan(int[] numbers) {
