@@ -144,22 +144,46 @@ public class ProblemSet10 {
     }
 
     public boolean canBalance(int[] numbers) {
-        int sum = 0;
-        int halfSum = 0;
-        for (int i : numbers) {
-            sum += i;
+        if (numbers == null || numbers.length == 0) {
+            return false;
         }
-        for (int j : numbers) {
-            if (halfSum <= sum / 2) {
-                halfSum += j;
-            } else {
-                return halfSum == sum / 2;
+
+        int leftBalance = 0;
+        int rightBalance = 0;
+
+        for (int i = 0; i < numbers.length; i++) {
+            for (int j = i; j >= 0; j--) {
+                leftBalance += numbers[j];
             }
+            for (int k = i+1; k < numbers.length; k++) {
+                rightBalance += numbers[k];
+            }
+            if (rightBalance == leftBalance) {
+                return true;
+            }
+            leftBalance = 0;
+            rightBalance = 0;
         }
         return false;
     }
 
     public boolean linearIn(int[] outer, int[] inner) {
+        if (outer == null || inner == null || outer.length == 0 || inner.length == 0) {
+            return false;
+        }
+
+        for (int i = 1; i < inner.length - 1; i++) {
+            if (inner[i] < inner[i - 1]) {
+                return false;
+            }
+        }
+
+        for (int i = 1; i < outer.length - 1; i++) {
+            if (outer[i] < outer[i - 1]) {
+                return false;
+            }
+        }
+
         for (int i : inner) {
             boolean exists = false;
             for (int k : outer) {
@@ -200,6 +224,7 @@ public class ProblemSet10 {
         if (n < 0) {
             return null;
         }
+        n++;
         ArrayList<Integer> totalarr = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             for (int j = 1; j < i + 1; j++) {
