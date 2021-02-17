@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class ProblemSet10 {
 
@@ -37,23 +38,23 @@ public class ProblemSet10 {
         if (numbers == null) {
             return -1;
         }
-        ArrayList<String> temp = new ArrayList<>();
-        for (int i : numbers) {
-            temp.add(Integer.toString(i));
+        if (numbers.length == 0) {
+            return 0;
         }
-        int maxSpan = 0;
-        while (temp.size() > 0) {
-            for (int i = 1; i < temp.size(); i++) {
-                if (temp.get(0).equals(temp.get(i))) {
-                    if (i + 1 > maxSpan) {
-                        maxSpan = i + 1;
-                    }
+
+        HashMap<Integer, Integer> firstAppearance = new HashMap<>();
+        int span = 1;
+        int maxSpan = 1;
+
+        for (int i = 0; i < numbers.length; i++) {
+            Integer s = firstAppearance.get(numbers[i]);
+            if (s == null) {
+                firstAppearance.put(numbers[i], i);
+            } else {
+                span = i - s + 1;
+                if (span > maxSpan) {
+                    maxSpan = span;
                 }
-            }
-            boolean tempBool = true;
-            String removingVal = temp.get(0);
-            while (tempBool) {
-                tempBool = temp.remove(removingVal);
             }
         }
         return maxSpan;
