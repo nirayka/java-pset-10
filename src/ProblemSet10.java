@@ -64,40 +64,46 @@ public class ProblemSet10 {
         if (numbers == null) {
             return null;
         }
-        int threeCount = 0;
-        ArrayList<Integer> threeIndexes = new ArrayList<>();
-        int fourCount = 0;
+
+        int threeValues = 0;
+        int fourValues = 0;
+        int firstThreeIndex = -1;
+        int firstFourIndex = -1;
+
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] == 3) {
-                if (numbers[i + 1] == 4) {
+                if (firstThreeIndex == -1) {
+                    firstThreeIndex = i;
+                } if (i != numbers.length-1 && numbers[i+1] == 3) {
                     return null;
                 }
-                threeCount++;
-                threeIndexes.add(i);
-            }
-            if (numbers[i] == 4) {
-                if (threeCount == 0) {
-                    return null;
+                threeValues++;
+            } else if (numbers[i] == 4) {
+                if (firstFourIndex == -1) {
+                    firstFourIndex = i;
                 }
-                fourCount++;
+                fourValues++;
             }
         }
-        if (threeCount != fourCount) {
+
+        if (threeValues != fourValues) {
             return null;
         }
-        int[] arr = new int[numbers.length];
-        for (int j : threeIndexes) {
-            arr[j] = 3;
-            arr[j + 1] = 4;
-        }
-        for (int k : numbers) {
-            for (int l = 0; l < arr.length; l++) {
-                if (arr[l] == 0 && k != 3 && k != 4) {
-                    arr[l] = k;
+
+        for (int k = firstThreeIndex; k < numbers.length; k++) {
+
+            if (numbers[k] == 4) {
+                for (int j = 0; j < numbers.length; j++) {
+                    if ((numbers[j] == 3)) {
+                        int t = numbers[j+1];
+                        numbers[j+1] = numbers[k];
+                        numbers[k] = t;
+                    }
                 }
             }
+
         }
-        return arr;
+        return numbers;
     }
 
     public int[] fix45(int[] numbers) {
